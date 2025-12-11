@@ -1531,7 +1531,7 @@
         }
     </style>
 </head>
-<body data-lang="en">
+<body data-lang="id">
 
     <div class="easter-egg" id="easterEgg">
         <img src="assets/blehhh.jpg" alt="hello there"/>
@@ -1541,7 +1541,7 @@
         <div class="topbar">
             <div class="title-badge">faust504</div>
             <div class="url">
-                <input readonly value="https://faust504.github.io/intro"/>
+                <input readonly value="https://faust504.github.io/"/>
             </div>
             <div class="window-controls">
                 <div class="btn-circle" id="minimizeBtn" title="Minimize">−</div>
@@ -1558,7 +1558,7 @@
             <div class="tab-right">
                 <div class="lang-toggle-wrapper">
                     <div class="lang-toggle" id="langToggle">
-                        <div class="lang-toggle-slider" id="langSlider">EN</div>
+                        <div class="lang-toggle-slider" id="langSlider">ID</div>
                     </div>
                 </div>
                 <div class="theme-toggle-wrapper">
@@ -1632,14 +1632,16 @@
                     </div>
                     <div class="media-row">
                         <div class="main-content-area">
-                            <div class="panel-left" data-blog="site-update" style="cursor: pointer;">
-                                <div class="image-placeholder img-loading">
-                                    <img loading="lazy" alt="Latest Update" src="assets/maintabimage.png"/>
+                            <div class="panel-left" data-blog="blog4" style="cursor: pointer;">
+
+                                <div class="image-placeholder">
+                                    <iframe width="100%" height="100%" style="aspect-ratio: 16/9; border: none;" src="https://www.youtube.com/embed/7AFRaZdVETk?si=GprhmJJOM2-stk7k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                 </div>
                                 <div style="padding:10px">
-                                    <p style="margin:0;font-weight:700;color:var(--accent)"><span data-translate="site-update-title">Site Update</span> <span style="font-weight:500;color:var(--muted)">• <span data-translate="site-update-date">October 23, 2025</span></span></p>
-                                    <p style="margin-top:6px;color:var(--muted)" data-translate="site-update-desc">updated the website a little bit, looks cooler, feels smoother, added more features, 0 bugs, faster performance.</p>
+                                    <p style="margin:0;font-weight:700;color:var(--accent)"><span data-translate="blog4-title">SPEGA Experience</span> <span style="font-weight:500;color:var(--muted)">• <span data-translate="blog4-date">December 12, 2025</span></span></p>
+                                    <p style="margin-top:6px;color:var(--muted)" data-translate="blog4-desc">my experience at spega, i talk about the experiences and fun i had in this school.</p>
                                 </div>
+                            
                             </div>
                             <aside class="panel-right">
                                 <div class="info-box">
@@ -1745,6 +1747,16 @@
                 <h2 style="margin:10px 0;font-size:20px;color:var(--accent);font-family:'Montserrat',sans-serif" data-translate="blog-heading">Blog Posts</h2>
                 <p style="color:var(--muted);margin:0 0 15px 10px" data-translate="blog-subheading">thoughts, updates, and musings</p>
                 <div class="blog-grid">
+
+                    <div class="blog-item" data-blog="site-update">
+                        <div loading="lazy" class="blog-image img-loading" style="background-image:url('assets/maintabimage.png')"></div>
+                        <div class="blog-text">
+                            <div class="blog-date" data-translate="blog3-date">November 12, 2025</div>
+                            <h3 data-translate="blog3-title">Site Update</h3>
+                            <p data-translate="blog3-preview">massively updated the website, looks visually more pleasing, feels smoother, added lots of features, improved performance.</p>
+                        </div>
+                    </div>
+
                     <div class="blog-item" data-blog="ae-progress">
                         <div loading="lazy" class="blog-image img-loading" style="background-image:url('assets/aftereffects.webp')"></div>
                         <div class="blog-text">
@@ -1753,6 +1765,7 @@
                             <p data-translate="blog1-preview">My journey switching from Alight Motion to After Effects and what I learned along the way...</p>
                         </div>
                     </div>
+
                     <div class="blog-item" data-blog="site-launch">
                         <div loading="lazy" class="blog-image img-loading" style="background-image:url('assets/oldoldsiteimage.png')"></div>
                         <div class="blog-text">
@@ -1761,6 +1774,7 @@
                             <p data-translate="blog2-preview">The story behind creating this site and the design choices I made...</p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </main>
@@ -1821,15 +1835,18 @@
                     'project3-desc': 'a smooth, unique, browser-window-style introduction, portfolio, and blog website for myself.',
                     'blog-heading': 'Blog Posts',
                     'blog-subheading': 'all of my previous blog posts',
+                    'blog3-date': 'November 12, 2025',
+                    'blog3-title': 'Site Update',
+                    'blog3-preview': 'massively updated the website, looks visually more pleasing, feels smoother, added lots of features, improved performance.',
                     'blog1-date': 'August 6, 2025',
                     'blog1-title': 'After Effects Progress',
                     'blog1-preview': 'emu otori edit that i remade in after effects, as seen in the timelapse. turned out nice.',
                     'blog2-date': 'August 13, 2025',
                     'blog2-title': 'Site Launch',
                     'blog2-preview': "launched my personal static website. it's a self introduction, portfolio, blog in one website.",
-                    'blog3-date': 'October 15, 2025',
-                    'blog3-title': 'Getting Into Cybersecurity',
-                    'blog3-preview': "Why I'm passionate about cybersecurity and the resources I'm using to learn..."
+                    'blog4-date': 'December 11, 2025',
+                    'blog4-title': 'SPEGA Experience',
+                    'blog4-desc': 'my experience at spega, i talk about the experiences and fun i had in this school.',
                 },
                 id: {
                     loading: 'Loading...',
@@ -1868,21 +1885,56 @@
                     'project3-desc': 'situs web perkenalan dan portofolio bertema window browser yang apik dan unik untuk diriku sendiri.',
                     'blog-heading': 'Postingan Blog',
                     'blog-subheading': 'postinganku sebelumnya',
+                    'blog3-date': '12 November 2025',
+                    'blog3-title': 'Update Website',
+                    'blog3-preview': 'update besar ke website, lebih enak dilihat, terasa lebih smooth, penambahan fitur banyak, update performa.',
                     'blog1-date': '6 Agustus 2025',
                     'blog1-title': 'Progress After Effects',
                     'blog1-preview': 'emu otori edit yang ku remake di after effects, seperti di timelapse atas. hasilnya lumayan.',
                     'blog2-date': '13 Agustus 2025',
                     'blog2-title': 'Peresmian Website',
                     'blog2-preview': "peresmian website pribadiku. website perkenalan, portofolio, dan blog dalam satu website.",
-                    'blog3-date': '15 Oktober 2025',
-                    'blog3-title': 'Terjun ke Dunia Keamanan Siber',
-                    'blog3-preview': 'Mengapa saya tertarik dengan keamanan siber dan sumber belajar yang saya gunakan...'
+                    'blog4-date': '11 Des. 2025',
+                    'blog4-title': 'Pengalaman di SPEGA',
+                    'blog4-desc': 'pengalamanku di spega, aku bercerita tentang pengalaman dan keseruan yang ku alami di sekolah ini.'
                 }
             };
             
 
             // Blog posts content (Markdown) - with translations
             const blogPosts = {
+                'blog4': {
+                    en: {
+                        title: 'SPEGA Experience',
+                        date: 'December 11, 2025',
+                        image: "https://i.ibb.co.com/0yZjJhkj/Whats-App-Image-2025-12-11-at-23-15-59.jpg", // change to video: to use video
+                        content: `
+a quick look into my life as a student at spega. in this youtube vlog i share what its like being a student here while showing some of my favorite spots around the school.
+<br><br>what's in this video:
+- daily atmosphere
+
+- quick school tour
+
+- personal experiences as a spega student
+`
+                    },
+                    id: {
+                        title: 'Pengalaman di SPEGA',
+                        date: '11 December 2025',
+                        image: 'https://i.ibb.co.com/0yZjJhkj/Whats-App-Image-2025-12-11-at-23-15-59.jpg', // change to video: to use video
+                        content: `
+sedikit cerita soal gimana rasanya jadi murid di spega. di vlog youtube ini aku bahas pengalaman ku sebagai murid disini sambil muter muter liatin beberapa tempat favoritku di sekolah.
+<br>
+<br>yang ada dalam video ini:
+
+- atmosfer harian
+
+- tur singkat sekolah
+
+- pengalaman pribadi sebagai anak spega
+`
+                    }
+                },
                 'site-update': {
                     en: {
                         title: 'Site Update',
@@ -2188,7 +2240,7 @@ punya masukan? dm aja
             const body = document.body;
 
             // Load saved language
-            const savedLang = localStorage.getItem('language') || 'en';
+            const savedLang = localStorage.getItem('language') || 'id';
             body.setAttribute('data-lang', savedLang);
             updateLanguage(savedLang);
 
@@ -2629,10 +2681,10 @@ punya masukan? dm aja
                 });
             });
 
-            const siteUpdateCard = document.querySelector('[data-blog="site-update"]');
+            const siteUpdateCard = document.querySelector('[data-blog="blog4"]');
             if (siteUpdateCard) {
                 siteUpdateCard.addEventListener('click', () => {
-                    openBlogModal('site-update');
+                    openBlogModal('blog4');
                 });
             }
 
