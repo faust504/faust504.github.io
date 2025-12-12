@@ -391,6 +391,11 @@
             font-size: 13px;
         }
 
+        /* Ensure Help/Info and logout text never wrap */
+        #helpBtn, #logoutBtn {
+            white-space: nowrap;
+        }
+
         .tab-right span {
             cursor: pointer;
             transition: var(--transition);
@@ -1635,7 +1640,7 @@
                             <div class="panel-left" data-blog="blog4" style="cursor: pointer;">
 
                                 <div class="image-placeholder">
-                                    <iframe width="100%" height="100%" style="aspect-ratio: 16/9; border: none;" src="https://www.youtube.com/embed/7AFRaZdVETk?si=GprhmJJOM2-stk7k" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                    <iframe width="100%" height="100%" style="aspect-ratio: 16/9; border: none;" src="https://www.youtube.com/embed/6--3cmDMJ5k?si=LCaDk8f1Nf2nVfso" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                 </div>
                                 <div style="padding:10px">
                                     <p style="margin:0;font-weight:700;color:var(--accent)"><span data-translate="blog4-title">SPEGA Experience</span> <span style="font-weight:500;color:var(--muted)">• <span data-translate="blog4-date">December 12, 2025</span></span></p>
@@ -1844,7 +1849,7 @@
                     'blog2-date': 'August 13, 2025',
                     'blog2-title': 'Site Launch',
                     'blog2-preview': "launched my personal static website. it's a self introduction, portfolio, blog in one website.",
-                    'blog4-date': 'December 11, 2025',
+                    'blog4-date': 'December 12, 2025',
                     'blog4-title': 'SPEGA Experience',
                     'blog4-desc': 'my experience at spega, i talk about the experiences and fun i had in this school.',
                 },
@@ -1894,7 +1899,7 @@
                     'blog2-date': '13 Agustus 2025',
                     'blog2-title': 'Peresmian Website',
                     'blog2-preview': "peresmian website pribadiku. website perkenalan, portofolio, dan blog dalam satu website.",
-                    'blog4-date': '11 Des. 2025',
+                    'blog4-date': '12 Des. 2025',
                     'blog4-title': 'Pengalaman di SPEGA',
                     'blog4-desc': 'pengalamanku di spega, aku bercerita tentang pengalaman dan keseruan yang ku alami di sekolah ini.'
                 }
@@ -1906,7 +1911,7 @@
                 'blog4': {
                     en: {
                         title: 'SPEGA Experience',
-                        date: 'December 11, 2025',
+                        date: 'December 12, 2025',
                         image: "https://i.ibb.co.com/0yZjJhkj/Whats-App-Image-2025-12-11-at-23-15-59.jpg", // change to video: to use video
                         content: `
 a quick look into my life as a student at spega. in this youtube vlog i share what its like being a student here while showing some of my favorite spots around the school.
@@ -1920,7 +1925,7 @@ a quick look into my life as a student at spega. in this youtube vlog i share wh
                     },
                     id: {
                         title: 'Pengalaman di SPEGA',
-                        date: '11 December 2025',
+                        date: '12 Desember 2025',
                         image: 'https://i.ibb.co.com/0yZjJhkj/Whats-App-Image-2025-12-11-at-23-15-59.jpg', // change to video: to use video
                         content: `
 sedikit cerita soal gimana rasanya jadi murid di spega. di vlog youtube ini aku bahas pengalaman ku sebagai murid disini sambil muter muter liatin beberapa tempat favoritku di sekolah.
@@ -2592,7 +2597,7 @@ punya masukan? dm aja
             discordBtn.addEventListener('click', ()=>{
                 const currentLang = body.getAttribute('data-lang');
                 if (currentLang === 'id') {
-                    alert('discord tidak mendukung tautan profil, kirim pesan saya @squidard (pengguna discord saya)');
+                    alert('discord tidak mendukung tautan profil, kirim pesan saya di @squidard (id discord saya)');
                 } else {
                     alert('discord doesn\'t support profile links, message me instead @squidard (my discord user)');
                 }
