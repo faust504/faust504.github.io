@@ -1,1552 +1,89 @@
 <!DOCTYPE html>
-    <html lang="en">
+<!-- ============================================================================
+     FAUST504'S PERSONAL WEBSITE
+     A browser-window-styled portfolio and blog site with glassmorphism design.
+     Built with vanilla HTML/CSS/JS for maximum performance and offline support.
+     ============================================================================ -->
+<html lang="en">
+
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <!-- Strict CSP (uncomment for production) -->
+    <!-- <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://cdn.jsdelivr.net https://upload.wikimedia.org https://i.scdn.co https://images.genius.com https://i.ibb.co.com data:; media-src 'self' https://files.catbox.moe; frame-src 'self' https://www.youtube.com; object-src 'none'; base-uri 'self';"> -->
+
+    <!-- Relaxed CSP for local testing -->
+    <!-- SECURITY POLICY: Content Security Policy (CSP)
+         This is like a bouncer at a club - it controls what resources can load.
+         We use a relaxed version for local testing. In production, this would be
+         stricter to prevent XSS attacks and unauthorized resource loading. -->
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src * data: blob:; media-src 'self' https://files.catbox.moe; frame-src 'self' https://www.youtube.com; object-src 'none'; base-uri 'self'; connect-src 'self' https://cdnjs.cloudflare.com;">
+
+    <!-- Open Graph / Facebook -->
+    <!-- SOCIAL MEDIA PREVIEW CARDS
+         These meta tags control how the site looks when shared on social media.
+         Think of them as the "business card" that appears when you share a link. -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://faust504.github.io/">
+    <meta property="og:title" content="faust504 | unemployed student">
+    <meta property="og:description" content="studying whatever interests me">
+    <meta property="og:image" content="https://faust504.github.io/assets/images/maintabimage.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://faust504.github.io/">
+    <meta property="twitter:title" content="faust504 | unemployed student">
+    <meta property="twitter:description" content="studying whatever interests me">
+    <meta property="twitter:image" content="https://faust504.github.io/assets/images/maintabimage.png">
+
     <title>faust!</title>
-    <link rel="icon" 
-        type="image/png" 
-        href="assets/epicfavicon.webp">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
-    <style>
-        :root {
-            --bg: #1a1a1a;
-            --panel: #252525;
-            --music1: #1f1f1f;
-            --music2: #1b1b1b;
-            --muted: #8b8b8b;
-            --accent: #e0e0e0;
-            --border: #3a3a3a;
-            --card-bg: linear-gradient(#2f2f2f, #292929);
-            --transition: all 0.2s ease;
-        }
-
-        [data-theme="light"] {
-            --bg: #f5f5f5;
-            --panel: #ffffff;
-            --music1: #f5f5f5;
-            --music2: #ffffff;
-            --muted: #666666;
-            --accent: #1a1a1a;
-            --border: #d0d0d0;
-            --card-bg: linear-gradient(#ffffff, #f8f8f8);
-        }
-
-        @keyframes moveGrid {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 44px; }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes bounceIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes spinLoader {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        * { 
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--bg);
-            background-image:
-                linear-gradient(90deg, var(--border) 1px, transparent 1px),
-                linear-gradient(var(--border) 1px, transparent 1px);
-            background-size: 44px 44px;
-            animation: moveGrid 10s linear infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            color: var(--accent);
-            -webkit-font-smoothing: antialiased;
-            position: relative;
-            transition: background 0.3s ease, color 0.3s ease;
-        }
-
-        .loader {
-            width: 60px;
-            height: 60px;
-            border: 4px solid var(--border);
-            border-top: 4px solid var(--accent);
-            border-radius: 50%;
-            animation: spinLoader 1s linear infinite;
-        }
-
-        .loading-text {
-            margin-top: 20px;
-            font-size: 18px;
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .img-loading {
-            position: relative;
-            overflow: hidden;
-            background: var(--panel);
-        }
-
-        .img-loading::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        .img-loading img {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .img-loading.loaded::before {
-            display: none;
-        }
-
-        .img-loading.loaded img {
-            opacity: 1;
-        }
-
-        .theme-toggle-wrapper, .lang-toggle-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-right: 12px;
-            border-right: 1px solid var(--border);
-            margin-right: 12px;
-        }
-
-        .theme-toggle, .lang-toggle {
-            position: relative;
-            width: 50px;
-            height: 26px;
-            background: var(--border);
-            border-radius: 13px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            border: 1px solid var(--border);
-        }
-
-        .theme-toggle:hover, .lang-toggle:hover {
-            background: #4a4a4a;
-        }
-
-        .theme-toggle-slider, .lang-toggle-slider {
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 20px;
-            height: 20px;
-            background: var(--panel);
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            font-size: 9px;
-            font-weight: 700;
-            color: var(--accent);
-            -webkit-user-select: none; /* Chrome, Safari, and Opera */
-            -moz-user-select: none;    /* Firefox */
-            -ms-user-select: none;     /* Internet Explorer/Edge */
-            user-select: none;
-        }
-
-        .theme-toggle-slider svg {
-            width: 12px;
-            height: 12px;
-            fill: var(--accent);
-        }
-
-        [data-theme="light"] .theme-toggle {
-            background: #ffd700;
-        }
-
-        [data-theme="light"] .theme-toggle-slider {
-            transform: translateX(24px);
-        }
-
-        [data-lang="id"] .lang-toggle {
-            background: #4a90e2;
-        }
-
-        [data-lang="id"] .lang-toggle-slider {
-            transform: translateX(24px);
-        }
-
-        .easter-egg {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.8);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-            max-width: 400px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-        }
-
-        .easter-egg.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-        }
-
-        .window {
-            width: 840px;
-            max-width: calc(100% - 40px);
-            height: 640px;
-            max-height: calc(100vh - 40px);
-            background: var(--panel);
-            border-radius: 14px;
-            border: 2px solid var(--border);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            animation: fadeIn 0.4s ease;
-            transition: all 0.3s ease;
-        }
-
-        .window.minimized {
-            transform: scale(0.8);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .window.maximized {
-            width: 100%;
-            height: 100vh;
-            max-width: 100%;
-            max-height: 100vh;
-            border-radius: 0;
-        }
-
-        .topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px;
-            background: linear-gradient(135deg, var(--panel), var(--bg));
-            border-bottom: 1px solid var(--border);
-            flex-shrink: 0;
-        }
-
-        .window-controls {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-circle {
-            width: 18px;
-            height: 18px;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            background: var(--panel);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            color: var(--muted);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .btn-circle:hover {
-            background: var(--border);
-            transform: scale(1.1);
-        }
-
-        .url {
-            flex: 1;
-            padding: 0 10px;
-        }
-
-        .url input {
-            width: 100%;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            padding: 8px 10px;
-            background: var(--bg);
-            font-size: 13px;
-            color: var(--accent);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .title-badge {
-            font-size: 12px;
-            color: var(--muted);
-            min-width: 40px;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .tabs {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--bg);
-            border-bottom: 1px solid var(--border);
-            flex-shrink: 0;
-        }
-
-        .tab-list {
-            display: flex;
-            gap: 4px;
-            padding: 8px 12px;
-        }
-
-        .tab {
-            padding: 10px 18px;
-            font-weight: 600;
-            background: var(--bg);
-            border-radius: 8px 8px 0 0;
-            border: 1px solid var(--border);
-            border-bottom: none;
-            cursor: pointer;
-            color: var(--muted);
-            font-family: 'Montserrat', sans-serif;
-            transition: var(--transition);
-            font-size: 14px;
-            box-shadow: inset 0 -2px 4px rgba(0,0,0,0.2);
-            position: relative;
-        }
-
-        .tab:hover {
-            color: var(--accent);
-            background: var(--panel);
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3), inset 0 -2px 4px rgba(0,0,0,0.2);
-        }
-
-        .tab.active {
-            background: linear-gradient(135deg, var(--panel), var(--bg));
-            border-color: var(--border);
-            color: var(--accent);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.1);
-            transform: translateY(0);
-        }
-
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--muted), var(--accent), var(--muted));
-        }
-
-        .tab-right {
-            display: flex;
-            align-items: center;
-            padding-right: 12px;
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        /* Ensure Help/Info and logout text never wrap */
-        #helpBtn, #logoutBtn {
-            white-space: nowrap;
-        }
-
-        .tab-right span {
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .tab-right span:hover {
-            color: var(--accent);
-        }
-
-        .content {
-            flex: 1;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--border) var(--bg);
-            background: var(--panel);
-            background-image:
-                radial-gradient(circle at 50% 50%, rgba(128, 128, 128, 0.06) 2px, transparent 1px),
-                radial-gradient(circle at 0% 100%, rgba(128, 128, 128, 0.04) 1px, transparent 1px),
-                radial-gradient(circle at 100% 0%, rgba(128, 128, 128, 0.04) 1px, transparent 1px);
-            background-size: 30px 30px;
-        }
-
-        .content::-webkit-scrollbar { width: 10px; }
-        .content::-webkit-scrollbar-track { background: var(--bg); }
-        .content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
-
-        .tab-content {
-            display: none;
-            padding: 14px;
-            min-height: 100%;
-            animation: fadeInUp 0.4s ease;
-        }
-
-        #main-tab { display: flex; gap: 14px; }
-
-        .left {
-            width: 220px;
-            min-width: 180px;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: var(--transition);
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .image-box-card {
-            flex-grow: 0;
-            display: flex;
-            padding: 0;
-            overflow: hidden;
-            aspect-ratio: 3/4;
-        }
-
-        .image-box-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .image-box-card:hover .image-box-img {
-            transform: scale(1.05);
-        }
-
-        .small-h {
-            font-weight: 700;
-            color: var(--accent);
-            margin: 0 0 8px 0;
-            font-size: 14px;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .find-list {
-            counter-reset: item;
-            padding-left: 8px;
-            margin: 0;
-        }
-
-        .find-list li {
-            list-style: none;
-            padding: 8px 0;
-            border-bottom: 1px dashed var(--border);
-            position: relative;
-            padding-left: 28px;
-            font-size: 14px;
-            transition: var(--transition);
-        }
-
-        .find-list li:last-child { border-bottom: none; }
-
-        .find-list li:hover {
-            background: rgba(128,128,128,0.1);
-            padding-left: 32px;
-        }
-
-        .find-list li::before {
-            counter-increment: item;
-            content: counter(item) ".";
-            position: absolute;
-            left: 6px;
-            top: 8px;
-            color: var(--muted);
-            font-weight: 700;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--accent);
-            text-decoration: none;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .social-link:hover { 
-            color: var(--accent);
-            opacity: 0.8;
-        }
-
-        .social-icon {
-            width: 20px;
-            height: 20px;
-            transition: var(--transition);
-            filter: brightness(0) invert(1);
-            opacity: 0.7;
-        }
-
-        [data-theme="light"] .social-icon {
-            filter: brightness(0);
-        }
-
-        .social-link:hover .social-icon {
-            transform: scale(1.2) rotate(5deg);
-            opacity: 1;
-        }
-
-        .center {
-            flex: 1;
-            min-width: 340px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .avatar-row {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .avatar {
-            width: 110px;
-            height: 110px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            flex-shrink: 0;
-            transition: var(--transition);
-        }
-
-        .avatar:hover {
-            transform: scale(1.05);
-        }
-
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .meta {
-            flex: 1;
-            padding: 6px 0;
-        }
-
-        .meta h2 {
-            margin: 0;
-            font-size: 18px;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--accent);
-        }
-
-        .meta p {
-            margin: 6px 0;
-            color: var(--muted);
-            font-size: 13px;
-            line-height: 1.4;
-        }
-
-        .mood {
-            font-weight: 700;
-            margin-top: 8px;
-            color: var(--accent);
-            font-size: 13px;
-            font-style: italic;
-        }
-
-        .playing {
-            margin-top: 12px;
-            border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 8px;
-            position: relative;
-            overflow: hidden;
-            background: var(--bg);
-        }
-
-        .playing::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: repeating-radial-gradient(circle at calc(12px + 24px) 36px, var(--music1) 0 3px, var(--music2) 3px 6px);
-            background-size: 100% 100%;
-            z-index: 0;
-            pointer-events: none;
-            opacity: 1; 
-        }
-
-        .playing > * {
-            position: relative;
-            z-index: 1;
-        }
-
-        .track {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 13px;
-        }
-
-        .record-art {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background-color: var(--border);
-            border: 1px solid var(--border);
-            flex-shrink: 0;
-            overflow: hidden;
-        }
-
-        .record-art.spinning {
-            animation: spin 3s linear infinite;
-        }
-
-        .record-art img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        .track-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .track-title {
-            font-weight: 600;
-            color: var(--accent);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .track-artist {
-            font-size: 11px;
-            color: var(--muted);
-            margin-top: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .next-up {
-            font-size: 11px;
-            color: var(--muted);
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 1px dashed var(--border);
-        }
-
-        .next-up strong {
-            color: var(--accent);
-        }
-
-        .player-controls {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .play-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            background: linear-gradient(135deg, var(--border), var(--panel));
-            color: var(--accent);
-            transition: var(--transition);
-        }
-
-        .play-btn:hover {
-            background: linear-gradient(135deg, var(--panel), var(--border));
-            transform: scale(1.1);
-        }
-
-        .progress-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .time {
-            font-size: 11px;
-            color: var(--muted);
-            width: 42px;
-            text-align: center;
-        }
-
-        input[type="range"] {
-            -webkit-appearance: none;
-            appearance: none;
-            height: 6px;
-            background: var(--border);
-            border-radius: 6px;
-            flex: 1;
-            cursor: pointer;
-            outline: none;
-            transition: background 0.2s ease;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--accent);
-            cursor: grab;
-            transition: var(--transition);
-            margin-top: -4px;
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: var(--accent);
-            cursor: grab;
-            transition: var(--transition);
-            border: none;
-        }
-
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-        }
-        input[type="range"]::-moz-range-thumb:hover {
-            transform: scale(1.2);
-        }
-
-        input[type="range"]::-webkit-slider-runnable-track {
-            height: 6px;
-            border-radius: 6px;
-        }
-        input[type="range"]::-moz-range-track {
-            height: 6px;
-            border-radius: 6px;
-            border: none;
-        }
-
-        .media-row {
-            display: flex;
-            gap: 12px;
-            margin-top: 12px;
-            flex: 1;
-        }
-
-        .main-content-area {
-            display: flex;
-            gap: 12px;
-            flex: 1;
-        }
-
-        .panel-left {
-            flex: 1;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            background: var(--bg);
-            display: flex;
-            flex-direction: column;
-            transition: all 0.2s ease, border-color 0.2s ease;
-            cursor: pointer;
-        }
-
-        .panel-left:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-            border-color: var(--accent);
-        }
-
-        .image-placeholder {
-            aspect-ratio: 16/9;
-            background: var(--panel);
-            overflow: hidden;
-        }
-
-        .image-placeholder img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .panel-left:hover .image-placeholder img {
-            transform: scale(1.05);
-        }
-
-        .panel-right {
-            width: 220px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .info-box {
-            border: 1px solid var(--border);
-            padding: 10px;
-            border-radius: 6px;
-            background: var(--bg);
-            flex: 1;
-            transition: var(--transition);
-        }
-
-        .info-box:hover {
-            background: var(--border);
-            transform: translateX(4px);
-        }
-
-        .info-box h4 {
-            margin: 0 0 6px 0;
-            font-size: 13px;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--accent);
-        }
-
-        .info-box p {
-            margin: 0;
-            font-size: 13px;
-            color: var(--accent);
-            line-height: 1.4;
-        }
-
-        .note {
-            margin-top: 12px;
-            font-size: 13px;
-            color: var(--accent);
-            border-top: 1px dashed var(--border);
-            padding-top: 10px;
-        }
-
-        .endnote {
-            font-size: 12px;
-            color: var(--muted);
-            margin-top: 8px;
-        }
-
-        .interests {
-            font-size: 13px;
-            color: var(--accent);
-            line-height: 1.6;
-        }
-
-        .portfolio-content {
-            display: none;
-            flex-direction: column;
-            padding: 10px;
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 16px;
-            margin-top: 15px;
-        }
-
-        .portfolio-item {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: var(--transition);
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        .portfolio-image {
-            aspect-ratio: 16/9;
-            border-bottom: 1px solid var(--border);
-            background-size: cover;
-            background-position: center;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-        .portfolio-item:hover .portfolio-image {
-            transform: scale(1.1);
-        }
-
-        .portfolio-desc {
-            padding: 12px;
-            font-size: 13px;
-        }
-
-        .portfolio-desc h4 {
-            margin: 0 0 6px 0;
-            color: var(--accent);
-            font-size: 14px;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .portfolio-desc p {
-            color: var(--muted);
-            margin: 0;
-        }
-
-        .blog-content {
-            display: none;
-            flex-direction: column;
-            padding: 10px;
-        }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 16px;
-            margin-top: 15px;
-        }
-
-        .blog-item {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .blog-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        .blog-image {
-            aspect-ratio: 16/9;
-            background-size: cover;
-            background-position: center;
-            border-bottom: 1px solid var(--border);
-            transition: transform 0.3s ease;
-        }
-
-        .blog-item:hover .blog-image {
-            transform: scale(1.05);
-        }
-
-        .blog-text {
-            padding: 16px;
-        }
-
-        .blog-date {
-            color: var(--muted);
-            font-size: 12px;
-            margin-bottom: 8px;
-        }
-
-        .blog-item h3 {
-            color: var(--accent);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-            margin: 0 0 8px 0;
-        }
-
-        .blog-item p {
-            color: var(--muted);
-            font-size: 14px;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        .skills-card {
-            background: var(--bg);
-            border: 1px solid var(--border);
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            width: 100%; /* Makes the card horizontal */
-            transition: var(--transition);
-        }
-        
-        .skills-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .skills-card-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
-        .skills-icon {
-            font-size: 24px;
-            line-height: 1;
-        }
-
-        .skills-header-text {
-            flex: 1;
-        }
-
-        .skills-title {
-            margin: 0;
-            color: var(--accent);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-        }
-
-        .skills-subtitle {
-            margin: 2px 0 0 0;
-            color: var(--muted);
-            font-size: 13px;
-        }
-
-        .skills-content {
-            display: flex;
-            flex-direction: column; /* Stack tags and proficiency */
-            gap: 20px;
-        }
-
-        .skills-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .skill-tag {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 13px;
-            color: var(--accent);
-        }
-
-        .skills-proficiency {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .proficiency-item {
-            width: 100%;
-        }
-
-        .proficiency-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 6px;
-            font-size: 14px;
-        }
-
-        .proficiency-label {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .proficiency-value {
-            color: var(--muted);
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        /* REMOVED old proficiency-slider styles */
-        
-        /* ADDED new progress bar styles */
-        .progress-bar-container {
-            width: 100%;
-            height: 10px;
-            background: var(--border);
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: var(--accent);
-            border-radius: 5px;
-            /* Added animation */
-            animation: fillProgressBar 1s ease-out forwards;
-            box-shadow: 0 0 5px rgba(255,255,255,0.3);
-        }
-
-        .blog-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .blog-modal.show {
-            display: flex;
-        }
-
-        .blog-modal-content {
-            background: var(--panel);
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            max-width: 800px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 30px;
-            position: relative;
-            animation: fadeInUp 0.3s ease;
-            scrollbar-width: thin;
-            scrollbar-color: var(--border) var(--panel);
-        }
-
-        .blog-modal-content::-webkit-scrollbar { 
-            width: 10px; 
-        }
-        
-        .blog-modal-content::-webkit-scrollbar-track { 
-            background: transparent; 
-        }
-        
-        .blog-modal-content::-webkit-scrollbar-thumb { 
-            background: var(--border); 
-            border-radius: 6px; 
-            border: 2px solid var(--panel);
-        }
-
-        .blog-modal-content::-webkit-scrollbar-button,
-        .blog-modal-content::-webkit-scrollbar-corner {
-            display: none;
-            width: 0;
-            height: 0;
-        }
-
-        .blog-modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--border);
-            border: none;
-            color: var(--accent);
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            z-index: 10;
-        }
-
-        .blog-modal-close:hover {
-            background: var(--accent);
-            color: var(--panel);
-            transform: scale(1.1);
-        }
-
-        .blog-modal-content h2 {
-            color: var(--accent);
-            font-family: 'Montserrat', sans-serif;
-            margin: 0 0 10px 0;
-        }
-
-        .blog-modal-content .blog-date {
-            margin-bottom: 20px;
-        }
-
-        .blog-modal-header-image {
-            width: auto;
-            max-width: 100%;
-            height: auto;
-            aspect-ratio: 16/9;
-            object-fit: contain;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            background-color: #000;
-        }
-
-        .blog-modal-content .markdown-content {
-            color: var(--accent);
-            line-height: 1.8;
-        }
-
-        .markdown-content h1, .markdown-content h2, .markdown-content h3 {
-            margin-top: 24px;
-            margin-bottom: 12px;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .markdown-content p {
-            margin-bottom: 16px;
-        }
-
-        .markdown-content code {
-            background: var(--bg);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .markdown-content pre {
-            background: var(--bg);
-            padding: 16px;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin: 16px 0;
-        }
-
-        .markdown-content pre code {
-            background: none;
-            padding: 0;
-        }
-
-        .markdown-content ul, .markdown-content ol {
-            margin-left: 20px;
-            margin-bottom: 16px;
-        }
-
-        .markdown-content li {
-            margin-bottom: 8px;
-        }
-
-        .markdown-content blockquote {
-            border-left: 4px solid var(--border);
-            padding-left: 16px;
-            margin: 16px 0;
-            color: var(--muted);
-            font-style: italic;
-        }
-
-        .markdown-content a {
-            color: var(--accent);
-            text-decoration: underline;
-        }
-
-        .markdown-content img {
-            max-width: 100%;
-            border-radius: 8px;
-            margin: 16px 0;
-        }
-
-        .btn {
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            background: linear-gradient(135deg, var(--border), var(--panel));
-            cursor: pointer;
-            font-size: 13px;
-            color: var(--accent);
-            transition: var(--transition);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .btn:hover {
-            background: linear-gradient(135deg, var(--panel), var(--border));
-            transform: translateY(-2px);
-        }
-
-        .linklike {
-            color: var(--accent);
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        .linklike:hover { 
-            color: var(--accent);
-            opacity: 0.8;
-        }
-
-        @media (max-width: 820px) {
-            body {
-                padding: 10px;
-            }
-            
-            .window {
-                width: 100%;
-                max-width: 100%;
-                height: 100vh;
-                max-height: 100vh;
-                border-radius: 8px;
-            }
-            
-            #main-tab { 
-                flex-direction: column; 
-            }
-            
-
-            .left, 
-            .center, 
-            .media-row, 
-            .main-content-area {
-                display: contents; 
-            }
-
-            /* 1. pfp/bio */
-            .avatar-row { order: 1; width: 100%; }
-            
-            /* 2. newest blog post (from .media-row -> .main-content-area) */
-            .panel-left { order: 2; width: 100%; }
-
-            /* 3. music player */
-            .playing { order: 3; width: 100%; } 
-            
-            /* 4. info boxes (from .media-row -> .main-content-area) */
-            .panel-right { 
-                order: 4; 
-                width: 100%; 
-                flex-direction: row; 
-                flex-wrap: wrap; 
-            } 
-            
-            /* 5. interests card (from .left) - moved under info boxes, above socials */
-            .card:has(.interests) { order: 5; width: 100%; } 
-
-            /* 6. socials card (from .left) */
-            .card:has(.find-list) { order: 6; width: 100%; } 
-            
-            
-            /* 7. image card (from .left) */
-            .image-box-card { 
-                order: 7; 
-                width: 100%; 
-                margin-bottom: 12px; 
-            }
-
-            /* 8. note - moved to the very bottom */
-            .note { order: 8; width: 100%; }
-
-            /* restore mobile specific flex behavior */
-            .avatar-row { 
-                flex-direction: column; 
-                text-align: center; 
-            }
-            
-            /* remove main-content-area rules that conflict with display: contents */
-            .main-content-area {
-                /* display: flex; was set to display: contents now */
-            }
-            
-            .avatar {
-                width: 90px;
-                height: 90px;
-            }
-            
-            .meta h2 {
-                font-size: 16px;
-            }
-            
-            .meta p {
-                font-size: 12px;
-            }
-            
-            .tabs {
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .tab-list {
-                flex-wrap: nowrap;
-                min-width: min-content;
-            }
-            
-            .tab {
-                white-space: nowrap;
-                font-size: 13px;
-                padding: 8px 12px;
-            }
-            
-            .theme-toggle-wrapper, .lang-toggle-wrapper {
-                padding-right: 8px;
-                margin-right: 8px;
-            }
-
-            .theme-toggle, .lang-toggle {
-                width: 45px;
-                height: 24px;
-            }
-
-            .theme-toggle-slider, .lang-toggle-slider {
-                width: 18px;
-                height: 18px;
-                -webkit-user-select: none; /* Chrome, Safari, and Opera */
-                -moz-user-select: none;    /* Firefox */
-                -ms-user-select: none;     /* Internet Explorer/Edge */
-                user-select: none;
-            }
-
-            [data-theme="light"] .theme-toggle-slider {
-                transform: translateX(21px);
-            }
-
-            [data-lang="id"] .lang-toggle-slider {
-                transform: translateX(21px);
-            }
-            
-            .topbar {
-                padding: 8px;
-            }
-            
-            .title-badge {
-                font-size: 11px;
-                min-width: 80px;
-            }
-            
-            .url input {
-                font-size: 11px;
-                padding: 6px 8px;
-            }
-            
-            .btn-circle {
-                width: 16px;
-                height: 16px;
-                font-size: 10px;
-            }
-
-            .blog-modal-content {
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .window {
-                border-radius: 0;
-                border: none;
-            }
-            
-            body {
-                padding: 0;
-            }
-            
-            .content {
-                padding: 8px;
-            }
-            
-            .tab-content {
-                padding: 8px;
-            }
-            
-            .panel-right {
-                flex-direction: column;
-            }
-            
-            .info-box {
-                width: 100%;
-            }
-            
-            .player-controls {
-                flex-wrap: wrap;
-                gap: 6px;
-            }
-            
-            .btn {
-                font-size: 12px;
-                padding: 5px 10px;
-            }
-            
-            .play-btn {
-                width: 32px;
-                height: 32px;
-            }
-            
-            .find-list li {
-                font-size: 13px;
-            }
-            
-            .card {
-                padding: 10px;
-                margin-bottom: 10px;
-            }
-            
-            .small-h {
-                font-size: 13px;
-            }
-
-            .blog-modal-content {
-                padding: 15px;
-                max-height: 85vh;
-            }
-        }
-    </style>
+    <link rel="icon" type="image/png" href="assets/icons/epicfavicon.webp">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Montserrat:wght@500;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./css/style.css">
 </head>
-<body data-lang="id">
 
-    <div class="easter-egg" id="easterEgg">
-        <img src="assets/blehhh.jpg" alt="hello there"/>
+<!-- THE EASTER EGG
+     This hidden image appears when you click the minimize button.
+     It's a fun surprise - like a secret compartment in furniture. -->
+
+<body data-lang="id">
+    <!-- SVG Fisheye Distortion Filter -->
+    <svg style="position: fixed; width: 0; height: 0; pointer-events: none;">
+        <defs>
+            <filter id="fisheye" x="-50%" y="-50%" width="200%" height="200%">
+                <!-- Improved Spherical Displacement Map -->
+                <feImage
+                    xlink:href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9IngiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iMTAwJSIgeTI9IjAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMjAyMDIwIi8+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiM4MDgwODAiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkZWRlZGUiLz48L2xpbmVhckdyYWRpZW50PjxsaW5lYXJHcmFkaWVudCBpZD0ieSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiMyMDIwMjAiLz48c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzgwODA4MCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2RlZGVkZSIvPjwvbGluZWFyR3JhZGllbnQ+PHJhZGlhbEdyYWRpZW50IGlkPSJtYXNrIiBjeD0iNTAlIiBjeT0iNTAlIiByPSI1MCUiPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IndoaXRlIi8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSJibGFjayIvPjwvcmFkaWFsR3JhZGllbnQ+PG1hc2sgaWQ9Im0iPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjbWFzaykiLz48L21hc2s+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjeCkiLz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3kpIiBzdHlsZT0ibWl4LWJsZW5kLW1vZGU6c2NyZWVuIi8+PC9zdmc+"
+                    result="map" />
+                <feDisplacementMap in="SourceGraphic" in2="map" scale="150" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- BACKGROUND GRID - Separate container for 3D fisheye effect -->
+    <div class="bg-grid-container">
+        <div class="bg-grid" id="bgGrid"></div>
     </div>
 
+    <div class="easter-egg" id="easterEgg">
+        <img src="assets/images/blehhh.jpg" alt="hello there" />
+    </div>
+
+    <!-- ========================================================================
+         THE MAIN WINDOW - Container for Everything
+         This div creates the "floating window" effect with glassmorphism.
+         Think of it as a desktop application window, but it's actually a website.
+         ======================================================================== -->
     <div class="window" id="mainWindow">
+        <!-- TOP BAR - Window controls and URL bar (decorative) -->
         <div class="topbar">
             <div class="title-badge">faust504</div>
             <div class="url">
-                <input readonly value="https://faust504.github.io/"/>
+                <input readonly value="https://faust504.github.io/" />
             </div>
             <div class="window-controls">
                 <div class="btn-circle" id="minimizeBtn" title="Minimize">−</div>
@@ -1554,12 +91,14 @@
                 <div class="btn-circle" id="closeBtn" title="Close">✕</div>
             </div>
         </div>
+        <!-- TAB NAVIGATION - Switch between Main, Portfolio, and Blog pages -->
         <nav class="tabs">
             <div class="tab-list">
                 <button class="tab active" data-tab="main" data-translate="tab-main">Main</button>
                 <button class="tab" data-tab="portfolio" data-translate="tab-portfolio">Portfolio</button>
                 <button class="tab" data-tab="blog" data-translate="tab-blog">Blog</button>
             </div>
+            <!-- Right side controls: Language toggle, Theme toggle, Help, Logout -->
             <div class="tab-right">
                 <div class="lang-toggle-wrapper">
                     <div class="lang-toggle" id="langToggle">
@@ -1570,51 +109,77 @@
                     <div class="theme-toggle" id="themeToggle">
                         <div class="theme-toggle-slider">
                             <svg id="themeIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                             </svg>
                         </div>
                     </div>
                 </div>
-                <span id="helpBtn" data-translate="help">Help</span> | <span class="linklike" id="logoutBtn" data-translate="logout">Log Outs</span>
+                <span id="helpBtn" data-translate="help">Help</span> | <span class="linklike" id="logoutBtn"
+                    data-translate="logout">Log Outs</span>
             </div>
         </nav>
+        <!-- ====================================================================
+             MAIN CONTENT AREA - Where the magic happens
+             Each tab-content div is a separate "page" that shows/hides.
+             ==================================================================== -->
         <main class="content">
+            <!-- MAIN TAB: Introduction, music player, featured blog -->
             <div class="tab-content" id="main-tab">
+                <!-- LEFT SIDEBAR: Social links, interests, aesthetic image -->
                 <aside class="left">
                     <div class="card">
                         <h3 class="small-h" data-translate="socials-title">Socials</h3>
                         <ol class="find-list">
-                            <li><a class="social-link" href="https://instagram.com/abubakarrashya" target="_blank"><img class="social-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram"/>Instagram</a></li>
-                            <li><a class="social-link" href="https://github.com/faust504" target="_blank"><img class="social-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg" alt="GitHub"/>Github</a></li>
-                            <li><a class="social-link" href="https://open.spotify.com/user/312vfpg3sgyhdfg4unxtmv4xudle" target="_blank"><img class="social-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg" alt="Spotify"/>Spotify</a></li>
-                            <li><span class="social-link" id="discordBtn"><img class="social-icon" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord"/>Discord</span></li>
+                            <li><a class="social-link" href="https://instagram.com/abubakarrashya" target="_blank"
+                                    rel="noopener noreferrer"><img class="social-icon"
+                                        src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg"
+                                        alt="Instagram" />Instagram</a></li>
+                            <li><a class="social-link" href="https://github.com/faust504" target="_blank"
+                                    rel="noopener noreferrer"><img class="social-icon"
+                                        src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/github.svg"
+                                        alt="GitHub" />Github</a></li>
+                            <li><a class="social-link" href="https://open.spotify.com/user/312vfpg3sgyhdfg4unxtmv4xudle"
+                                    target="_blank" rel="noopener noreferrer"><img class="social-icon"
+                                        src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/spotify.svg"
+                                        alt="Spotify" />Spotify</a></li>
+                            <li><span class="social-link" id="discordBtn"><img class="social-icon"
+                                        src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg"
+                                        alt="Discord" />Discord</span></li>
                         </ol>
                     </div>
                     <div class="card">
                         <h3 class="small-h" data-translate="interests-title">Interests</h3>
-                        <div class="interests" data-translate="interests-text">video editing, motion graphics, python, cybersecurity, linux, photography, visual design</div>
+                        <div class="interests" data-translate="interests-text">video editing, motion graphics, python,
+                            cybersecurity, linux, photography, visual design</div>
                     </div>
                     <div class="card image-box-card img-loading">
-                        <img loading="lazy" alt="aesthetic" src="assets/imageundersocials.jpg" class="image-box-img"/>
+                        <img loading="lazy" alt="aesthetic" src="assets/images/imageundersocials.jpg"
+                            class="image-box-img" />
                     </div>
                 </aside>
+                <!-- CENTER COLUMN: Profile, music player, featured content -->
                 <section class="center">
                     <div class="avatar-row">
                         <a href="https://www.roblox.com/users/1003745284/profile">
                             <div class="avatar img-loading">
-                                <img loading="lazy" alt="my pfp" src="assets/pfp.webp"/>
+                                <img loading="lazy" alt="my pfp" src="assets/images/pfp2.webp" />
                             </div>
                         </a>
                         <div class="meta">
-                            <h2>faust504<small style="font-weight:600;color:#aaa"> • <span data-translate="aka">a.k.a</span> rashya</small></h2>
-                            <p data-translate="bio">script kiddie | fluent english and indonesian · interest in cybersecurity (redteam) · i use arch btw</p>
+                            <h2>faust504<small style="font-weight:600;color:#aaa"> • <span
+                                        data-translate="aka">a.k.a</span> rashya</small></h2>
+                            <p data-translate="bio">script kiddie | fluent english and indonesian · interest in
+                                cybersecurity (redteam) · i use arch btw</p>
                             <div class="mood" data-translate="quote">"Cogito, ergo sum." -René Descartes</div>
                         </div>
                     </div>
+                    <!-- THE MUSIC PLAYER
+                         A fully functional audio player with playlist, controls, and progress bar.
+                         Think of it as a mini-Spotify embedded in the website. -->
                     <div class="playing" id="playingBox">
                         <div class="track">
                             <div class="record-art img-loading" id="recordArt">
-                                <img loading="lazy" alt="Record Art" id="recordImg" src=""/>
+                                <img loading="lazy" alt="Record Art" id="recordImg" src="" />
                             </div>
                             <div class="track-info">
                                 <div class="track-title" id="trackTitle">Loading...</div>
@@ -1631,46 +196,66 @@
                         </div>
                         <div class="progress-row">
                             <div class="time" id="currentTime">00:00</div>
-                            <input type="range" id="progress" min="0" max="100" value="0"/>
+                            <input type="range" id="progress" min="0" max="100" value="0" />
                             <div class="time" id="totalTime">00:00</div>
                         </div>
                     </div>
+                    <!-- FEATURED BLOG POST
+                         This panel showcases the latest/featured blog (currently the SPEGA video).
+                         The YouTube iframe has an invisible overlay to make it clickable. -->
                     <div class="media-row">
                         <div class="main-content-area">
                             <div class="panel-left" data-blog="blog4" style="cursor: pointer;">
 
-                                <div class="image-placeholder">
-                                    <iframe width="100%" height="100%" style="aspect-ratio: 16/9; border: none;" src="https://www.youtube.com/embed/6--3cmDMJ5k?si=LCaDk8f1Nf2nVfso" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                <div class="image-placeholder" style="position: relative;">
+                                    <div class="iframe-overlay"
+                                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; cursor: pointer;">
+                                    </div>
+                                    <iframe width="100%" height="100%" style="aspect-ratio: 16/9; border: none;"
+                                        src="https://www.youtube.com/embed/6--3cmDMJ5k?si=LCaDk8f1Nf2nVfso"
+                                        title="YouTube video player" frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                 </div>
                                 <div style="padding:10px">
-                                    <p style="margin:0;font-weight:700;color:var(--accent)"><span data-translate="blog4-title">SPEGA Experience</span> <span style="font-weight:500;color:var(--muted)">• <span data-translate="blog4-date">December 12, 2025</span></span></p>
-                                    <p style="margin-top:6px;color:var(--muted)" data-translate="blog4-desc">my experience at spega, i talk about the experiences and fun i had in this school.</p>
+                                    <p style="margin:0;font-weight:700;color:var(--accent)"><span
+                                            data-translate="blog4-title">SPEGA Experience</span> <span
+                                            style="font-weight:500;color:var(--muted)">• <span
+                                                data-translate="blog4-date">December 12, 2025</span></span></p>
+                                    <p style="margin-top:6px;color:var(--muted)" data-translate="blog4-desc">my
+                                        experience at spega, i talk about the experiences and fun i had in this school.
+                                    </p>
                                 </div>
-                            
+
                             </div>
                             <aside class="panel-right">
                                 <div class="info-box">
                                     <h4 data-translate="music-title">Music</h4>
-                                    <p data-translate="music-text">reality club, the smiths, mac demarco, radiohead, tyler the creator, tv girl</p>
+                                    <p data-translate="music-text">reality club, the smiths, mac demarco, radiohead,
+                                        tyler the creator, tv girl</p>
                                 </div>
                                 <div class="info-box">
                                     <h4 data-translate="media-title">Visual Media</h4>
-                                    <p data-translate="media-text">neon genesis evangelion, breaking bad, 500 days of summer, bladerunner 2049, fight club</p>
+                                    <p data-translate="media-text">neon genesis evangelion, breaking bad, 500 days of
+                                        summer, bladerunner 2049, fight club</p>
                                 </div>
                                 <div class="info-box">
                                     <h4 data-translate="games-title">Games</h4>
-                                    <p data-translate="games-text">minecraft, roblox, pubgm, free fire, chess, singleplayer story games.</p>
+                                    <p data-translate="games-text">minecraft, roblox, pubgm, free fire, chess,
+                                        singleplayer story games.</p>
                                 </div>
                             </aside>
                         </div>
                     </div>
                     <div class="note">
                         <strong data-translate="thanks">thanks for visiting!!!</strong>
-                        <div class="endnote"><strong>FYI:</strong> <span data-translate="fyi">i didn't fully make this</span></div>
+                        <div class="endnote"><strong>FYI:</strong> <span data-translate="fyi">i didn't fully make
+                                this</span></div>
                     </div>
                 </section>
             </div>
             <!-- START OF PORTFOLIO TAB -->
+            <!-- PORTFOLIO TAB: Skills and project showcase -->
             <div class="tab-content portfolio-content" id="portfolio-tab">
                 <!-- START OF SKILLS-PORTFOLIO -->
                 <div class="skills-card">
@@ -1694,97 +279,62 @@
                             <div class="proficiency-item">
                                 <div class="proficiency-header">
                                     <span class="proficiency-label">Python</span>
-                                    <span class="proficiency-value">30%</span>
-                                </div>
-                                <div class="progress-bar-container">
-                                    <div class="progress-bar-fill" style="width: 30%;"></div>
-                                </div>
-                            </div>
-                            <div class="proficiency-item">
-                                <div class="proficiency-header">
-                                    <span class="proficiency-label">Video Editing</span>
-                                    <span class="proficiency-value">75%</span>
-                                </div>
-                                <div class="progress-bar-container">
-                                    <div class="progress-bar-fill" style="width: 75%;"></div>
-                                </div>
-                            </div>
-                            <div class="proficiency-item">
-                                <div class="proficiency-header">
-                                    <span class="proficiency-label">CSS, HTML, JavaScript</span>
                                     <span class="proficiency-value">15%</span>
                                 </div>
                                 <div class="progress-bar-container">
                                     <div class="progress-bar-fill" style="width: 15%;"></div>
                                 </div>
                             </div>
+                            <div class="proficiency-item">
+                                <div class="proficiency-header">
+                                    <span class="proficiency-label">Video Editing</span>
+                                    <span class="proficiency-value">45%</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar-fill" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                            <div class="proficiency-item">
+                                <div class="proficiency-header">
+                                    <span class="proficiency-label">CSS, HTML, JavaScript</span>
+                                    <span class="proficiency-value">10%</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar-fill" style="width: 10%;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                <!-- END OF SKILLS-PORTFOLIO -->
+                    <!-- END OF SKILLS-PORTFOLIO -->
                 </div>
                 <!-- START OF PROJECTS-PORTFOLIO -->
-                <h2 style="margin:10px 0;font-size:20px;color:var(--accent);font-family:'Montserrat',sans-serif" data-translate="portfolio-heading">My Projects</h2>
+                <h2 style="margin:10px 0;font-size:20px;color:var(--accent);font-family:'Montserrat',sans-serif"
+                    data-translate="portfolio-heading">My Projects</h2>
+                <!-- PROJECT GRID
+                     This grid is populated by JavaScript from data/projects.js.
+                     Starting empty to avoid flash of hardcoded content. -->
                 <div class="portfolio-grid">
-                    <a href="https://www.roblox.com/catalog/92115969258782/batik-spega" target="_blank" class="portfolio-item">
-                        <div loading="lazy" class="portfolio-image img-loading" style="background-image:url('assets/robloxuniform.jpg')"></div>
-                        <div class="portfolio-desc">
-                            <h4 data-translate="project1-title">School Uniform in Roblox</h4>
-                            <p data-translate="project1-desc">a replica of my school's batik uniform in Roblox, by editing photos of the irl uniform. made some robux from it.</p>
-                        </div>
-                    </a>
-                    <a href="https://www.roblox.com/games/118579241387230/forgotten" target="_blank" class="portfolio-item">
-                        <div loading="lazy" class="portfolio-image img-loading" style="background-image:url('assets/robloxschool.jpg')"></div>
-                        <div class="portfolio-desc">
-                            <h4 data-translate="project2-title">School Replica in Roblox</h4>
-                            <p data-translate="project2-desc">a decently accurate replica of my school remade in Roblox, using Roblox Studio (work in progress).</p>
-                        </div>
-                    </a>
-                    <a href="https://faust504.github.io/" target="_blank" class="portfolio-item">
-                        <div loading="lazy" class="portfolio-image img-loading" style="background-image:url('assets/oldsiteimage.png')"></div>
-                        <div class="portfolio-desc">
-                            <h4 data-translate="project3-title">Personal Website</h4>
-                            <p data-translate="project3-desc">a smooth, unique, browser-window-style introduction, portfolio, and blog website for myself.</p>
-                        </div>
-                    </a>
+                    <!-- Portfolio items dynamically rendered by JS -->
                 </div>
             </div>
+            <!-- BLOG TAB: List of all blog posts -->
             <div class="tab-content blog-content" id="blog-tab">
-                <h2 style="margin:10px 0;font-size:20px;color:var(--accent);font-family:'Montserrat',sans-serif" data-translate="blog-heading">Blog Posts</h2>
-                <p style="color:var(--muted);margin:0 0 15px 10px" data-translate="blog-subheading">thoughts, updates, and musings</p>
+                <h2 style="margin:10px 0;font-size:20px;color:var(--accent);font-family:'Montserrat',sans-serif"
+                    data-translate="blog-heading">Blog Posts</h2>
+                <p style="color:var(--muted);margin:0 0 15px 10px" data-translate="blog-subheading">thoughts, updates,
+                    and musings</p>
                 <div class="blog-grid">
-
-                    <div class="blog-item" data-blog="site-update">
-                        <div loading="lazy" class="blog-image img-loading" style="background-image:url('assets/maintabimage.png')"></div>
-                        <div class="blog-text">
-                            <div class="blog-date" data-translate="blog3-date">November 12, 2025</div>
-                            <h3 data-translate="blog3-title">Site Update</h3>
-                            <p data-translate="blog3-preview">massively updated the website, looks visually more pleasing, feels smoother, added lots of features, improved performance.</p>
-                        </div>
-                    </div>
-
-                    <div class="blog-item" data-blog="ae-progress">
-                        <div loading="lazy" class="blog-image img-loading" style="background-image:url('assets/aftereffects.webp')"></div>
-                        <div class="blog-text">
-                            <div class="blog-date" data-translate="blog1-date">August 6, 2025</div>
-                            <h3 data-translate="blog1-title">Learning After Effects</h3>
-                            <p data-translate="blog1-preview">My journey switching from Alight Motion to After Effects and what I learned along the way...</p>
-                        </div>
-                    </div>
-
-                    <div class="blog-item" data-blog="site-launch">
-                        <div loading="lazy" class="blog-image img-loading" style="background-image:url('assets/oldoldsiteimage.png')"></div>
-                        <div class="blog-text">
-                            <div class="blog-date" data-translate="blog2-date">August 13, 2025</div>
-                            <h3 data-translate="blog2-title">Building My Personal Website</h3>
-                            <p data-translate="blog2-preview">The story behind creating this site and the design choices I made...</p>
-                        </div>
-                    </div>
-
+                    <!-- Blog items dynamically rendered by JS -->
                 </div>
             </div>
         </main>
     </div>
 
+    <!-- ========================================================================
+         BLOG MODAL - Full-screen blog post viewer
+         This modal pops up when you click a blog post. It's like a lightbox
+         for blog content, supporting images, videos, and YouTube embeds.
+         ======================================================================== -->
     <div class="blog-modal" id="blogModal">
         <div class="blog-modal-content">
             <button class="blog-modal-close" id="blogModalClose">×</button>
@@ -1792,6 +342,9 @@
                 <source src="" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
+            <iframe id="blogModalYoutube" class="blog-modal-header-image" style="display: none; border: none;"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             <img id="blogModalImage" class="blog-modal-header-image" alt="Blog post header" style="display: none;">
             <h2 id="blogModalTitle"></h2>
             <div class="blog-date" id="blogModalDate"></div>
@@ -1799,919 +352,19 @@
         </div>
     </div>
 
-    <script>
-        (function(){
-            // Translations
-            const translations = {
-                en: {
-                    loading: 'Loading...',
-                    'tab-main': 'Main',
-                    'tab-portfolio': 'Portfolio',
-                    'tab-blog': 'Blog',
-                    help: 'Help',
-                    logout: 'Log Out',
-                    'socials-title': 'Socials',
-                    'interests-title': 'Interests',
-                    'interests-text': 'video editing, motion graphics, python, cybersecurity, linux, photography, visual design',
-                    aka: 'a.k.a',
-                    bio: 'script kiddie | fluent english and indonesian · trying to learn programming · i use arch btw',
-                    quote: '"Cogito, ergo sum." -René Descartes',
-                    next: 'Next:',
-                    'site-update-title': 'Site Update',
-                    'site-update-date': 'November 12, 2025',
-                    'site-update-desc': 'massively updated the website, looks visually more pleasing, feels smoother, added lots of features, improved performance.',
-                    'music-title': 'Music',
-                    'music-text': 'reality club, the smiths, mac demarco, radiohead, tyler the creator, tv girl',
-                    'media-title': 'Visual Media',
-                    'media-text': 'neon genesis evangelion, breaking bad, 500 days of summer, bladerunner 2049, fight club',
-                    'games-title': 'Games',
-                    'games-text': 'minecraft, roblox, pubgm, free fire, chess, singleplayer story games.',
-                    thanks: 'thanks for visiting!!!',
-                    fyi: "i vibecoded this website",
-                    'skills-title': 'Skills & Expertise',
-                    'skills-subtitle': "what i'm good at",
-                    'portfolio-heading': 'My Projects',
-                    'portfolio-subheading': 'a collection of all of my (public) projects',
-                    'project1-title': 'School Uniform in Roblox',
-                    'project1-desc': "a replica of my school's batik uniform in Roblox, by editing photos of the irl uniform. made some robux from it.",
-                    'project2-title': 'School Replica in Roblox',
-                    'project2-desc': 'a decently accurate replica of my school remade in Roblox, using Roblox Studio (work in progress).',
-                    'project3-title': 'Personal Website',
-                    'project3-desc': 'a smooth, unique, browser-window-style introduction, portfolio, and blog website for myself.',
-                    'blog-heading': 'Blog Posts',
-                    'blog-subheading': 'all of my previous blog posts',
-                    'blog3-date': 'November 12, 2025',
-                    'blog3-title': 'Site Update',
-                    'blog3-preview': 'massively updated the website, looks visually more pleasing, feels smoother, added lots of features, improved performance.',
-                    'blog1-date': 'August 6, 2025',
-                    'blog1-title': 'After Effects Progress',
-                    'blog1-preview': 'emu otori edit that i remade in after effects, as seen in the timelapse. turned out nice.',
-                    'blog2-date': 'August 13, 2025',
-                    'blog2-title': 'Site Launch',
-                    'blog2-preview': "launched my personal static website. it's a self introduction, portfolio, blog in one website.",
-                    'blog4-date': 'December 12, 2025',
-                    'blog4-title': 'SPEGA Experience',
-                    'blog4-desc': 'my experience at spega, i talk about the experiences and fun i had in this school.',
-                },
-                id: {
-                    loading: 'Loading...',
-                    'tab-main': 'Utama',
-                    'tab-portfolio': 'Portofolio',
-                    'tab-blog': 'Blog',
-                    help: '    Info',
-                    logout: 'Keluar',
-                    'socials-title': 'Media Sosial',
-                    'interests-title': 'Minat',
-                    'interests-text': 'video editing, motion graphics, python, cybersecurity, linux, fotografi, desain visual',
-                    aka: 'alias',
-                    bio: 'script kiddie | fasih bahasa inggris dan indonesia · belajar programming · arch btw',
-                    quote: '"Cogito, ergo sum." -René Descartes',
-                    next: 'Selanjutnya:',
-                    'site-update-title': 'Update Website',
-                    'site-update-date': '12 November 2025',
-                    'site-update-desc': 'update besar ke website, lebih enak dilihat, terasa lebih smooth, penambahan fitur banyak, update performa.',
-                    'music-title': 'Musik',
-                    'music-text': 'reality club, the smiths, mac demarco, radiohead, tyler the creator, tv girl',
-                    'media-title': 'Media Visual',
-                    'media-text': 'neon genesis evangelion, breaking bad, 500 days of summer, bladerunner 2049, fight club',
-                    'games-title': 'Game',
-                    'games-text': 'minecraft, roblox, pubgm, free fire, catur, game cerita singleplayer.',
-                    thanks: 'terima kasih sudah berkunjung!!!',
-                    fyi: "ini websitenya ku vibecode",
-                    'skills-title': 'Keahlian & Kemampuan',
-                    'skills-subtitle': 'apa aja yang aku pro di bidangnya',
-                    'portfolio-heading': 'Proyekku',
-                    'portfolio-subheading': 'koleksi semua proyekku (yang publik)',
-                    'project1-title': 'Seragam Sekolah di Roblox',
-                    'project1-desc': 'replika seragam batik sekolahku di Roblox, dengan ngedit foto seragam aslinya. lumayan dapet banyak robux.',
-                    'project2-title': 'Replika Sekolah di Roblox',
-                    'project2-desc': 'replika yang cukup akurat dari sekolahku yang dibuat ulang di Roblox, menggunakan Roblox Studio (masih dalam proses).',
-                    'project3-title': 'Situs Web Pribadi',
-                    'project3-desc': 'situs web perkenalan dan portofolio bertema window browser yang apik dan unik untuk diriku sendiri.',
-                    'blog-heading': 'Postingan Blog',
-                    'blog-subheading': 'postinganku sebelumnya',
-                    'blog3-date': '12 November 2025',
-                    'blog3-title': 'Update Website',
-                    'blog3-preview': 'update besar ke website, lebih enak dilihat, terasa lebih smooth, penambahan fitur banyak, update performa.',
-                    'blog1-date': '6 Agustus 2025',
-                    'blog1-title': 'Progress After Effects',
-                    'blog1-preview': 'emu otori edit yang ku remake di after effects, seperti di timelapse atas. hasilnya lumayan.',
-                    'blog2-date': '13 Agustus 2025',
-                    'blog2-title': 'Peresmian Website',
-                    'blog2-preview': "peresmian website pribadiku. website perkenalan, portofolio, dan blog dalam satu website.",
-                    'blog4-date': '12 Des. 2025',
-                    'blog4-title': 'Pengalaman di SPEGA',
-                    'blog4-desc': 'pengalamanku di spega, aku bercerita tentang pengalaman dan keseruan yang ku alami di sekolah ini.'
-                }
-            };
-            
-
-            // Blog posts content (Markdown) - with translations
-            const blogPosts = {
-                'blog4': {
-                    en: {
-                        title: 'SPEGA Experience',
-                        date: 'December 12, 2025',
-                        image: "https://i.ibb.co.com/0yZjJhkj/Whats-App-Image-2025-12-11-at-23-15-59.jpg", // change to video: to use video
-                        content: `
-a quick look into my life as a student at spega. in this youtube vlog i share what its like being a student here while showing some of my favorite spots around the school.
-<br><br>what's in this video:
-- daily atmosphere
-
-- quick school tour
-
-- personal experiences as a spega student
-`
-                    },
-                    id: {
-                        title: 'Pengalaman di SPEGA',
-                        date: '12 Desember 2025',
-                        image: 'https://i.ibb.co.com/0yZjJhkj/Whats-App-Image-2025-12-11-at-23-15-59.jpg', // change to video: to use video
-                        content: `
-sedikit cerita soal gimana rasanya jadi murid di spega. di vlog youtube ini aku bahas pengalaman ku sebagai murid disini sambil muter muter liatin beberapa tempat favoritku di sekolah.
-<br>
-<br>yang ada dalam video ini:
-
-- atmosfer harian
-
-- tur singkat sekolah
-
-- pengalaman pribadi sebagai anak spega
-`
-                    }
-                },
-                'site-update': {
-                    en: {
-                        title: 'Site Update',
-                        date: 'November 12, 2025',
-                        image: "assets/maintabimage.png", // change to video: to use video
-                        content: `
-# 🎯 Website Improvements and Updates
-
-just improved almost everything on the site, here's what's new:
-
-### 👁️ Visual Improvements
-- **smoother animations** - everything feels more fluid now
-- **better color scheme** - more visual hierarchy and contrast
-- **improved cards** - info boxes and content cards pop more
-
-### ⚙️ New Features
-- **blog system** - you're reading it right now!
-- **better music player** - more music and more controls
-- **theme toggle** - added dark theme and light theme
-- **language toggle** - for my indonesian visitors
-
-### ⚡ Performance
-- **better caching** - images load more efficiently
-- **compressed assets** - images load faster
-- **smoother scrolling** - improved scroll performance
-- **no bugs** - probably
-
-### 🎨 Color Updates
-- info boxes now use darker background for better contrast
-- portfolio and blog cards have improved visual hierarchy
-- better separation between content and background
-
-## 🕰️ What's Next?
-
-still have some ideas for future updates:
-- [ ] more blog posts
-- [ ] using a custom web domain for the website
-- [ ] more projects to put in portfolio tab
-- [ ] more features(?)
-
-## 📝 Feedback?
-
-if you have any feedback, contact me through my socials
-
-thanks for visiting and checking the update
-`
-                    },
-                    id: {
-                        title: 'Update Website',
-                        date: '12 November 2025',
-                        image: 'assets/maintabimage.png', // change to video: to use video
-                        content: `
-# 🎯 Pembaruan Website
-
-baru aja memperbarui hampir semuanya di website, ini yang baru:
-
-## Apa yang Berubah?
-
-### 👁️ Peningkatan Visual
-- **animasi lebih smooth** - semuanya terasa lebih fluid sekarang
-- **skema warna lebih bagus** - lebih banyak hierarki visual dan kontras
-- **kotak informasi lebih bagus** - kotak info dan kartu konten lebih menonjol
-
-### ⚙️ Fitur Baru
-- **sistem blog** - yang anda sedang baca sekarang
-- **music player** - lebih banyak musik dan kontrol
-- **ganti tema** - penambahan tema gelap dan tema terang
-- **ganti bahasa** - untuk pengunjung luar negeri
-
-### ⚡ Performa
-- **caching lebih baik** - gambar dimuat lebih efisien
-- **kompresi aset** - gambar muncul lebih cepet
-- **scrolling lebih halus** - performa scroll ditingkatkan
-- **tanpa bug** - insyallah
-
-### 🎨 Pembaruan Warna
-- kotak info sekarang menggunakan latar belakang lebih gelap untuk kontras yang lebih baik
-- kartu portofolio dan blog memiliki hierarki visual yang ditingkatkan
-- pemisahan yang lebih baik antara konten dan latar belakang
-
-## 🕰️ Apa Selanjutnya?
-
-masih ada ide untuk update di masa depan:
-- [ ] postingan lebih banyak
-- [ ] menggunakan domain web khusus untuk website
-- [ ] lebih banyak proyek di tab portofolio
-- [ ] lebih banyak fitur(?)
-
-## 📝 Saran?
-
-jika anda menemukan masalah atau memiliki saran, hubungi melalui media sosial saya
-
-terima kasih telah berkunjung dan memeriksa pembaruan
-`
-                    }
-                },
-                'ae-progress': {
-                    en: {
-                        title: 'Learning After Effects',
-                        date: 'August 6, 2025',
-                        image: 'assets/aftereffects.webp',
-                        content: `
-# Alight Motion to After Effects
-
-after months of editing on mobile using **Alight Motion**, i finally decided to try Adobe After Effects. here's what i learned in the process.
-
-## Why?
-
-alight motion is great for mobile editing, but i hit a problem.
-my midrange android phone did not like running alight motion whatsoever,
-it was so laggy to the point a 10 minute edit could be a 4 four edit.
-
-i also wanted:
-- more complex animations
-- better effects and plugins
-- professional workflow
-- desktop-level control
-
-## How I Learned
-
-**After Effects was intimidating** at first. the ui is packed with features, and coming from a mobile app, it looked pretty hard.
-
-### What Helped Me Learn
-
-1. **tutorials** - tons of free content out there
-2. **practice projects** - recreating other people's edits
-3. **breaking things** - sometimes the best way to learn
-
-most importantly, i adapted quickly because i understood the fundamentals from Alight Motion.
-
-## This Project
-
-the emu otori edit you see in the thumbnail was one of my after effects edit recreations. It took me:
-- 6 hours total
-- mindless replaying
-- many frustrated imperfections
-- (im not efficient)
-
-## Conclusion
-
-it's been a challenging but rewarding journey. After Effects opens up so many creative possibilities that i couldn't access on mobile. it also gives you experience in motion graphics/video-editing, which you can flex irl.
-
-the video above shows my timelapse - you can see all the layers and effects that went into it.
-`
-                    },
-                    id: {
-                        title: 'Belajar After Effects',
-                        date: '6 Agustus 2025',
-                        image: 'assets/aftereffects.webp',
-                        content: `
-# Alight Motion ke After Effects
-
-setelah berbulan-bulan ngedit di hp pake **Alight Motion**, akhirnya kucoba Adobe After Effects. inilah yang ku pahami dalam prosesnya.
-
-## Mengapa?
-
-alight motion bagus buat ngedit di hp, tapi aku ketemu masalah.
-hp midrange ku sangat amat nggak suka alight motion (ngelag, ngecrash, ngefreeze),
-ngelag nemen sampe edit 10 menit bisa jadi edit empat jam.
-
-aku juga pengen:
-- animasi yang lebih kompleks
-- efek dan plugin yang lebih bagus
-- alur kerja yang profesional
-- kebebasan tingkat desktop
-
-## Bagaimana Aku Belajar
-
-**After Effects keliatan susah** pada awalnya. ui nya penuh dengan fitur, dan berasal dari aplikasi mobile, keliatannya susah.
-
-### Apa yang Membantuku Belajar
-
-1. **tutorial** - banyak banget konten gratis di luar sana
-2. **proyek latihan** - bikin ulang editan orang lain
-3. **ngerusak sesuatu** - kadang cara terbaik untuk belajar
-
-yang paling penting, aku beradaptasi cepat karena aku ngerti fundamentalnya dari Alight Motion.
-
-## Proyek Ini
-
-edit emu otori yang kamu lihat di thumbnail adalah salah satu remake edit after effects-ku. itu memakan waktu:
-- 6 jam total
-- ngulang sambil bengong
-- banyak yang nggak sempurna
-- (aku nggak efisien)
-
-## Kesimpulan
-
-ini pengalaman yang susah tapi bermanfaat. After Effects membuka banyak kemungkinan kreatif yang nggak ada di hp. itu juga ngasih pengalaman motion graphics/video-editing.
-
-video di atas adalah timelapseku - keliatan semua layer & efek yang kupake di dalamnya.
-`
-                    }
-                },
-                'site-launch': {
-                    en: {
-                        title: 'Building My Personal Website',
-                        date: 'August 13, 2025',
-                        image: 'assets/oldoldsiteimage.png',
-                        content: `
-# What is this?
-
-welcome to my personal website, it's my introduction and (informal) portfolio at the same time.
-
-## Why?
-
-i thought it would be cool to:
-- showcase my projects
-- write about my interests
-- have my own website available 24/7
-
-## Design Choices
-
-### The Window Style
-
-went with a **browser-window aesthetic** because:
-1. unique and eye-catching
-2. i dont see anyone else doing it like this
-3. compact, focused experience
-4. looks pretty cool ngl
-
-### Dark Theme First
-
-as a night owl, **dark mode is essential**. the color scheme i chose:
-- easy on the eyes
-- professional looking
-- good contrast for readability
-
-i like its overall visual quality tbh
-
-## Future Plans
-
-stuff i wanna add:
-- [ ] blog system
-- [ ] theme toggle
-- [ ] language toggle
-- [ ] more interactivity and animations
-
-
-## Thank you!
-
-if you're reading this, thanks for checking out my site. feel free to explore, and if you find any bugs.. well they're features now lol
-
-got feedback? dm me on any of my socials
-`
-                    },
-                    id: {
-                        title: 'Membangun Situs Web Pribadi Saya',
-                        date: '13 Agustus 2025',
-                        image: 'assets/oldoldsiteimage.png',
-                        content: `
-# Ini Apaan?
-
-selamat datang di *website* pribadiku, ini perkenalan sekaligus portofolioku (yang santai) juga.
-
-## Kenapa?
-
-aku mikir keren aja kalo bisa:
-- pamerin proyek-proyekku
-- nulis tentang hal-hal yang aku suka
-- punya website sendiri yang online 24/7
-
-## Pilihan Desain
-
-### Gaya Jendela
-
-aku milih **estetika jendela *browser*** karena:
-1. unik dan menarik perhatian
-2. aku jarang liat orang lain bikin kayak gini
-3. pengalaman yang ringkas dan fokus
-4. keren aja
-
-### *Dark Theme* Duluan
-
-**mode gelap itu wajib**. skema warna yang aku pilih:
-- enak dilihat mata
-- keliatan profesional
-- kontrasnya bagus buat dibaca
-
-aku suka banget sama kualitas visualnya secara keseluruhan
-
-## Rencana Masa Depan
-
-hal-hal yang pengen aku tambahin:
-- [ ] sistem blog
-- [ ] tombol ganti tema (*theme toggle*)
-- [ ] tombol ganti bahasa (*language toggle*)
-- [ ] lebih banyak interaktivitas dan animasi
-
-## Makasih
-
-kalo kamu baca ini, makasih udah mampir ke situs-ku. silakan liat liat, kalo ketemu bug, 100% itu fitur
-
-punya masukan? dm aja
-`
-                    }
-                }
-            };
-
-            // Language management
-            const langToggle = document.getElementById('langToggle');
-            const langSlider = document.getElementById('langSlider');
-            const body = document.body;
-
-            // Load saved language
-            const savedLang = localStorage.getItem('language') || 'id';
-            body.setAttribute('data-lang', savedLang);
-            updateLanguage(savedLang);
-
-            function updateLanguage(lang) {
-                langSlider.textContent = lang.toUpperCase();
-                
-                // Update all translatable elements
-                document.querySelectorAll('[data-translate]').forEach(el => {
-                    const key = el.getAttribute('data-translate');
-                    if (translations[lang] && translations[lang][key]) {
-                        el.textContent = translations[lang][key];
-                    }
-                });
-
-                // Update blog modal if it's open
-                const blogModal = document.getElementById('blogModal');
-                if (blogModal.classList.contains('show')) {
-                    const currentBlogId = blogModal.getAttribute('data-current-blog');
-                    if (currentBlogId && blogPosts[currentBlogId]) {
-                        updateBlogModalContent(currentBlogId, lang);
-                    }
-                }
-            }
-
-            function updateBlogModalContent(blogId, lang) {
-                const post = blogPosts[blogId][lang];
-                if (post) {
-                    document.getElementById('blogModalTitle').textContent = post.title;
-                    document.getElementById('blogModalDate').textContent = post.date;
-                    document.getElementById('blogModalContent').innerHTML = marked.parse(post.content);
-                }
-            }
-
-            langToggle.addEventListener('click', () => {
-                const currentLang = body.getAttribute('data-lang');
-                const newLang = currentLang === 'en' ? 'id' : 'en';
-                body.setAttribute('data-lang', newLang);
-                localStorage.setItem('language', newLang);
-                updateLanguage(newLang);
-            });
-
-            // Theme management
-            const themeToggle = document.getElementById('themeToggle');
-            const themeIcon = document.getElementById('themeIcon');
-
-            // Load saved theme
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            body.setAttribute('data-theme', savedTheme);
-            updateThemeIcon(savedTheme);
-
-            function updateThemeIcon(theme) {
-                if (theme === 'light') {
-                    themeIcon.innerHTML = '<circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><line x1="12" y1="1" x2="12" y2="3" stroke="currentColor" stroke-width="2"/><line x1="12" y1="21" x2="12" y2="23" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke="currentColor" stroke-width="2"/><line x1="1" y1="12" x2="3" y2="12" stroke="currentColor" stroke-width="2"/><line x1="21" y1="12" x2="23" y2="12" stroke="currentColor" stroke-width="2"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke="currentColor" stroke-width="2"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke="currentColor" stroke-width="2"/>';
-                } else {
-                    themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor"/>';
-                }
-            }
-
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = body.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                body.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                updateThemeIcon(newTheme);
-                updateProgressFill();
-            });
-
-            // Image loading handler
-            function setupImageLoading() {
-                const images = document.querySelectorAll('.img-loading img');
-                images.forEach(img => {
-                    if (img.complete) {
-                        img.parentElement.classList.add('loaded');
-                    } else {
-                        img.addEventListener('load', () => {
-                            img.parentElement.classList.add('loaded');
-                        });
-                    }
-                });
-
-                const bgImages = document.querySelectorAll('.portfolio-image, .blog-image');
-                bgImages.forEach(el => {
-                    const bgUrl = el.style.backgroundImage.match(/url\(['"]?(.*?)['"]?\)/);
-                    if (bgUrl) {
-                        const img = new Image();
-                        img.onload = () => el.classList.add('loaded');
-                        img.src = bgUrl[1];
-                    }
-                });
-            }
-
-            // Image loading screen
-            window.addEventListener('load', () => {
-                setupImageLoading();
-                setTimeout(() => {
-                    document.getElementById('loadingScreen').classList.add('hidden');
-                }, 500);
-            });
-
-            // Music playlist
-            const playlist = [
-                {
-                    title: "hated in the nation",
-                    artist: "Hindia",
-                    url: "https://files.catbox.moe/nsawi9.mp3",
-                    cover: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Doves%2C_%2725_on_Blank_Canvas.jpg"
-                },
-                {
-                    title: "Cherry Waves",
-                    artist: "Deftones",
-                    url: "https://files.catbox.moe/9ozx2x.mp3",
-                    cover: "https://upload.wikimedia.org/wikipedia/en/9/99/Saturday_night_wrist.jpg"
-                },
-                {
-                    title: "SLOW DANCING IN THE DARK",
-                    artist: "Joji",
-                    url: "https://files.catbox.moe/tmvah0.mp3",
-                    cover: "https://i.scdn.co/image/ab67616d0000b2736015d4763f2053b3a3d85459"
-                },
-                {
-                    title: "Answer",
-                    artist: "Tyler, The Creator",
-                    url: "https://files.catbox.moe/4h4ico.mp3",
-                    cover: "https://upload.wikimedia.org/wikipedia/en/f/fd/Wolf_Cover2.jpg"
-                },
-                {
-                    title: "rose",
-                    artist: "jaydes",
-                    url: "https://files.catbox.moe/7df2ub.mp3",
-                    cover: "https://images.genius.com/1799af58aee9438b05d3f7a0519968a9.1000x1000x1.png"
-                }
-            ];
-
-            let currentTrackIndex = Math.floor(Math.random() * playlist.length);
-
-            const playBtn = document.getElementById('playBtn');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const progress = document.getElementById('progress');
-            const currentTimeEl = document.getElementById('currentTime');
-            const totalTimeEl = document.getElementById('totalTime');
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
-            const discordBtn = document.getElementById('discordBtn');
-            const minimizeBtn = document.getElementById('minimizeBtn');
-            const maximizeBtn = document.getElementById('maximizeBtn');
-            const closeBtn = document.getElementById('closeBtn');
-            const mainWindow = document.getElementById('mainWindow');
-            const easterEgg = document.getElementById('easterEgg');
-            const helpBtn = document.getElementById('helpBtn');
-            const logoutBtn = document.getElementById('logoutBtn');
-            const recordArt = document.getElementById('recordArt');
-            const recordImg = document.getElementById('recordImg');
-            const trackTitle = document.getElementById('trackTitle');
-            const trackArtist = document.getElementById('trackArtist');
-            const nextTrack = document.getElementById('nextTrack');
-            const blogModal = document.getElementById('blogModal');
-            const blogModalClose = document.getElementById('blogModalClose');
-            const blogModalTitle = document.getElementById('blogModalTitle');
-            const blogModalDate = document.getElementById('blogModalDate');
-            const blogModalContent = document.getElementById('blogModalContent');
-            const blogModalImage = document.getElementById('blogModalImage');
-            const blogModalVideo = document.getElementById('blogModalVideo');
-
-            let audio = new Audio();
-            let animationId = null;
-            let dragging = false;
-            let audioLoaded = false;
-
-            function loadTrack(index, autoLoad = false) {
-                const track = playlist[index];
-                
-                // only set src if we want to preload
-                if (autoLoad) {
-                    audio.src = track.url;
-                    audio.load();
-                    audioLoaded = true;
-                } else {
-                    // store the song URL but don't load yet
-                    audio.src = '';
-                    audioLoaded = false;
-                }
-                
-                recordImg.src = track.cover;
-                trackTitle.textContent = track.title;
-                trackArtist.textContent = track.artist;
-                
-                const nextIndex = (index + 1) % playlist.length;
-                nextTrack.textContent = `${playlist[nextIndex].title} - ${playlist[nextIndex].artist}`;
-            }
-
-            function formatTime(s){
-                if (!isFinite(s)) return '00:00';
-                s = Math.max(0, Math.floor(s));
-                const m = Math.floor(s/60);
-                const sec = s % 60;
-                return (m < 10 ? '0'+m : m) + ':' + (sec < 10 ? '0'+sec : sec);
-            }
-
-            function updateProgressFill() {
-                const percent = progress.value || 0;
-                const fillColor = 'var(--accent)'; 
-                const trackColor = 'var(--border)';
-                
-                progress.style.background = `linear-gradient(to right, ${fillColor} ${percent}%, ${trackColor} ${percent}%)`;
-            }
-
-            function updateUI(){
-                const t = audio.currentTime || 0;
-                const d = audio.duration || 0;
-                if (!dragging && isFinite(d) && d > 0) {
-                    const percent = Math.round((t/d)*100);
-                    progress.value = Math.min(100, Math.max(0, percent));
-                }
-                currentTimeEl.textContent = formatTime(t);
-                totalTimeEl.textContent = formatTime(d);
-                updateProgressFill();
-            }
-
-            function animate(){
-                updateUI();
-                if(!audio.paused){
-                    animationId = requestAnimationFrame(animate);
-                }
-            }
-
-            function updatePlayBtn(playing){
-                playBtn.textContent = playing ? '⏸' : '▶';
-                recordArt.classList.toggle('spinning', playing);
-            }
-
-            function togglePlay() {
-                // if audio hasn't been loaded yet, load it now
-                if (!audioLoaded) {
-                    const track = playlist[currentTrackIndex];
-                    audio.src = track.url;
-                    audio.load();
-                    audioLoaded = true;
-                }
-                
-                if(audio.paused){
-                    audio.play().catch(err => console.log('Playback prevented:', err));
-                } else {
-                    audio.pause();
-                }
-            }
-
-            playBtn.addEventListener('click', togglePlay);
-
-            function playPrevious() {
-                currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-                const wasPlaying = !audio.paused;
-                loadTrack(currentTrackIndex, wasPlaying);
-                if(wasPlaying){
-                    audio.play().catch(err => console.log('Playback prevented:', err));
-                }
-            }
-
-            prevBtn.addEventListener('click', playPrevious);
-
-            function playNext() {
-                currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-                const wasPlaying = !audio.paused;
-                loadTrack(currentTrackIndex, wasPlaying);
-                if(wasPlaying){
-                    audio.play().catch(err => console.log('Playback prevented:', err));
-                }
-            }
-
-            nextBtn.addEventListener('click', playNext);
-
-            document.addEventListener('keydown', (e) => {
-                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-                
-                if (blogModal.classList.contains('show')) {
-                    if (e.key === 'Escape') {
-                        blogModal.classList.remove('show');
-                        blogModal.removeAttribute('data-current-blog');
-                        document.body.style.overflow = '';
-                        blogModalVideo.pause();
-                    }
-                    return;
-                }
-
-                switch(e.code) {
-                    case 'Space':
-                        e.preventDefault();
-                        togglePlay();
-                        break;
-                    case 'ArrowLeft':
-                        e.preventDefault();
-                        playPrevious();
-                        break;
-                    case 'ArrowRight':
-                        e.preventDefault();
-                        playNext();
-                        break;
-                }
-            });
-
-            progress.max = 100;
-            progress.addEventListener('input', ()=>{
-                dragging = true;
-                const pct = progress.value / 100;
-                const d = audio.duration || 0;
-                if (isFinite(d)) {
-                    const newT = pct * d;
-                    currentTimeEl.textContent = formatTime(newT);
-                }
-                updateProgressFill();
-            });
-
-            progress.addEventListener('change', ()=>{
-                const pct = progress.value / 100;
-                const d = audio.duration || 0;
-                if (isFinite(d)) {
-                    audio.currentTime = pct * d;
-                }
-                dragging = false;
-                updateUI();
-            });
-
-            audio.addEventListener('loadedmetadata', updateUI);
-            audio.addEventListener('timeupdate', ()=>{
-                if(!dragging) updateUI();
-            });
-
-            audio.addEventListener('play', ()=>{
-                updatePlayBtn(true);
-                if (animationId) cancelAnimationFrame(animationId);
-                animationId = requestAnimationFrame(animate);
-            });
-
-            audio.addEventListener('pause', ()=> {
-                updatePlayBtn(false);
-                if (animationId) {
-                    cancelAnimationFrame(animationId);
-                    animationId = null;
-                }
-            });
-            
-            audio.addEventListener('ended', ()=>{
-                updatePlayBtn(false);
-                currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-                loadTrack(currentTrackIndex);
-                audio.play().catch(err => console.log('Playback prevented:', err));
-            });
-
-            discordBtn.addEventListener('click', ()=>{
-                const currentLang = body.getAttribute('data-lang');
-                if (currentLang === 'id') {
-                    alert('discord tidak mendukung tautan profil, kirim pesan saya di @squidard (id discord saya)');
-                } else {
-                    alert('discord doesn\'t support profile links, message me instead @squidard (my discord user)');
-                }
-            });
-
-            minimizeBtn.addEventListener('click', ()=>{
-                mainWindow.classList.add('minimized');
-                setTimeout(()=>{
-                    easterEgg.classList.add('show');
-                    setTimeout(()=>{
-                        easterEgg.classList.remove('show');
-                        setTimeout(()=>{
-                            mainWindow.classList.remove('minimized');
-                        }, 300);
-                    }, 3000);
-                }, 300);
-            });
-
-            maximizeBtn.addEventListener('click', ()=>{
-                mainWindow.classList.toggle('maximized');
-            });
-
-            closeBtn.addEventListener('click', ()=>{
-                window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-            });
-
-            helpBtn.addEventListener('click', ()=>{
-                window.location.href = 'https://github.com/faust504/faust504.github.io';
-            });
-
-            logoutBtn.addEventListener('click', ()=>{
-                const currentLang = body.getAttribute('data-lang');
-                if (currentLang === 'id') {
-                    alert('keluar...???');
-                } else {
-                    alert('log out...???');
-                }
-            });
-
-            tabs.forEach(btn=>{
-                btn.addEventListener('click', ()=>{
-                    tabs.forEach(t=> t.classList.remove('active'));
-                    btn.classList.add('active');
-                    const tabId = btn.getAttribute('data-tab');
-                    tabContents.forEach(content => content.style.display = 'none');
-                    document.getElementById(`${tabId}-tab`).style.display = 'flex';
-                    
-                    setTimeout(setupImageLoading, 100);
-                });
-            });
-
-            function openBlogModal(blogId) {
-                const currentLang = body.getAttribute('data-lang');
-                const post = blogPosts[blogId][currentLang];
-                
-                if (post) {
-                    blogModalTitle.textContent = post.title;
-                    blogModalDate.textContent = post.date;
-                    blogModalContent.innerHTML = marked.parse(post.content);
-                    
-                    blogModalImage.style.display = 'none';
-                    blogModalImage.src = '';
-                    blogModalVideo.style.display = 'none';
-                    blogModalVideo.pause();
-                    blogModalVideo.src = '';
-
-                    if (post.video) {
-                        blogModalVideo.src = post.video;
-                        blogModalVideo.style.display = 'block';
-                    } else if (post.image) {
-                        blogModalImage.src = post.image;
-                        blogModalImage.style.display = 'block';
-                    }
-                    
-                    blogModal.classList.add('show');
-                    blogModal.setAttribute('data-current-blog', blogId);
-                    document.body.style.overflow = 'hidden';
-                }
-            }
-
-            const blogItems = document.querySelectorAll('.blog-item');
-            blogItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const blogId = item.getAttribute('data-blog');
-                    openBlogModal(blogId);
-                });
-            });
-
-            const siteUpdateCard = document.querySelector('[data-blog="blog4"]');
-            if (siteUpdateCard) {
-                siteUpdateCard.addEventListener('click', () => {
-                    openBlogModal('blog4');
-                });
-            }
-
-            blogModalClose.addEventListener('click', () => {
-                blogModal.classList.remove('show');
-                blogModal.removeAttribute('data-current-blog');
-                document.body.style.overflow = '';
-                blogModalVideo.pause();
-            });
-
-            blogModal.addEventListener('click', (e) => {
-                if (e.target === blogModal) {
-                    blogModal.classList.remove('show');
-                    blogModal.removeAttribute('data-current-blog');
-                    document.body.style.overflow = '';
-                    blogModalVideo.pause();
-                }
-            });
-
-            loadTrack(currentTrackIndex, false);
-            updateProgressFill();
-        })();
-    </script>
+    <!-- Local copy of marked.js for offline/local file access -->
+    <!-- JAVASCRIPT DEPENDENCIES
+         These scripts load in order:
+         1. marked.js - Converts markdown to HTML for blog posts
+         2. Data files - Project and blog post content
+         3. main.js - All the interactive functionality -->
+    <script src="./js/marked.min.js"></script>
+
+    <!-- Data Files (loaded as JS to bypass CORS locally) -->
+    <script src="./data/projects.js"></script>
+    <script src="./data/blog_posts.js"></script>
+
+    <script src="./js/main.js"></script>
 </body>
+
 </html>

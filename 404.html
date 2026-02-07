@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>404 | faust!</title>
+    <link rel="icon" type="image/png" href="assets/icons/epicfavicon.webp">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Montserrat:wght@500;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body data-theme="dark">
+    <div class="window" style="max-width: 400px; height: auto;">
+        <div class="topbar">
+            <div class="title-badge">Error</div>
+            <div class="window-controls">
+                <a href="#" id="close404" class="btn-circle"
+                    style="text-decoration: none; display: flex; align-items: center; justify-content: center;">✕</a>
+            </div>
+        </div>
+        <div class="content" style="text-align: center; padding: 40px 20px;">
+            <h1 style="font-size: 48px; margin: 0; color: var(--accent);">404</h1>
+            <p style="color: var(--muted); margin: 10px 0 20px;">Page Not Found</p>
+            <a href="#" id="homeBtn" class="btn" style="text-decoration: none; display: inline-block;">Return Home</a>
+        </div>
+    </div>
+    <script>
+        // Use local storage logic from main.js (simplified)
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+
+        function goHome(e) {
+            e.preventDefault();
+            window.location.href = window.location.origin + '/';
+        }
+
+        document.getElementById('homeBtn').addEventListener('click', goHome);
+        document.getElementById('close404').addEventListener('click', goHome);
+    </script>
+</body>
+
+</html>
